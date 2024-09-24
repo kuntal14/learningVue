@@ -1,26 +1,56 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <navbar
+  :pages = "publishedPages"
+  :active-page = "activePage"
+  :nav-link-click = "(index) => activePage = index"
+  >
+  </navbar>
+
+  <page-viewer 
+    :page = "publishedPages[activePage]"
+  ></page-viewer>
+
+  <create-page
+    @page-created="pageCreated"
+  ></create-page>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Navbar from './components/Navbar.vue';
+import PageViewer from './components/PageViewer.vue';
+import CreatePage from './components/CreatePage.vue';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    Navbar,
+    PageViewer,
+    CreatePage
+  },
+  created(){
+    this.getPages();
+  },
+  computed:{
+      publishedPages(){
+          return this.pages.filter(p => p.published)
+      }
+  },
+  data() {
+    return {
+      activePage: 0,
+      pages: []
+    };
+  },
+  methods: {
+      async getPages() {
+        let res = await fetch('pages.json');
+        let data = await res.json();
+        this.pages = data;
+      },
+      pageCreated(pageObj){
+        this.pages.push(pageObj);
+      }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
