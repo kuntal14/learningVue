@@ -11,4 +11,6 @@ app.use(router);
 app.config.globalProperties.$bus = $bus;
 app.config.globalProperties.$pages = $pages;
 
+// console.log($pages)
+
 app.mount('#app');

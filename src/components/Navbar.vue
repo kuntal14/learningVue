@@ -7,15 +7,15 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
             <navbar-link 
-            v-for="(page, index) in pages" class="nav-item" :key="index"
-            :page="page"
-            :index="index"
-            :isActive = "activePage==index"
+                v-for="(page, index) in pages" class="nav-item" :key="index"
+                :page="page"
+                :index="index"
             ></navbar-link>
 
             <li>
                 <router-link
                 to="/create"
+                active-class="active emphasize"
                 class="nav-link"
                 aria-current="page"
                 > Create Page </router-link>
@@ -40,12 +40,14 @@ export default{
     },
     created(){
         this.getThemeSetting();
+
+        this.pages = this.$pages.getAllPages();
     },
     
-    props:['pages', 'active-page'],
     data(){
         return{
-            theme : 'light'
+            theme : 'light',
+            data : []
         }
     },
     methods: {
@@ -71,3 +73,9 @@ export default{
     }
 }
 </script>
+
+<style>
+.emphasize{
+  text-decoration: underline !important;
+}
+</style>
