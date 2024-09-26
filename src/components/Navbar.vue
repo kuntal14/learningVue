@@ -14,7 +14,7 @@
 
             <li>
                 <router-link
-                to="/create"
+                to="/pages/create"
                 active-class="active emphasize"
                 class="nav-link"
                 aria-current="page"
